@@ -337,8 +337,13 @@ struct FEMState {
         int k=0;
         for (int j=0; j<M; j++) for (int i=0; i<N; i++) {
             int A=(N+1)*j+i, B=(N+1)*j+(i+1), C=(N+1)*(j+1)+i, D=(N+1)*(j+1)+(i+1);
-            tri[k++] = {{A,B,D}};
-            tri[k++] = {{A,D,C}};
+            if ((i+j)%2==0) {
+                tri[k++] = {{A,B,C}};   // lower-left triangle
+                tri[k++] = {{B,D,C}};   // upper-right triangle
+            } else {
+                tri[k++] = {{A,B,D}};   // upper-left triangle
+                tri[k++] = {{A,D,C}};   // lower-right triangle
+            }
         }
     }
 
